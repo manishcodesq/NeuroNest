@@ -21,7 +21,16 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import MicIcon from '@mui/icons-material/Mic';
 import ShareIcon from '@mui/icons-material/Share';
 import CircleIcon from '@mui/icons-material/Circle';
+import { useTranslation } from 'react-i18next';
 
+const YourComponent = () => {
+  const { t } = useTranslation();
+  
+  // Now replace hardcoded text like:
+  // "Welcome to NeuroNest" → {t('home.welcome')}
+  // "Get Started" → {t('home.getStarted')}
+  // etc.
+}
 // Register Chart.js components
 ChartJS.register(
   CategoryScale,
