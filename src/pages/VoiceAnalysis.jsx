@@ -12,18 +12,18 @@ const VoiceAnalysis = () => {
 const tips = [
   {
     icon: <AccessTimeIcon sx={{ color: '#b39ddb', fontSize: 22 }} />,
-    title: 'Recording Duration',
-    text: 'Speak for 1-2 minutes for the best analysis results. You can talk about your day, describe a picture, or read a short paragraph.',
+    title: t('voiceAnalysis.recordingDuration'),
+    text: t('voiceAnalysis.recordingDurationDesc'),
   },
   {
     icon: <SurroundSoundIcon sx={{ color: '#81c784', fontSize: 22 }} />,
-    title: 'Clear Environment',
-    text: 'Find a quiet space and speak at your normal volume. Make sure your device’s microphone is working properly.',
+    title: t('voiceAnalysis.clearEnvironment'),
+    text: t('voiceAnalysis.clearEnvironmentDesc'),
   },
   {
     icon: <VolumeUpIcon sx={{ color: '#4fc3f7', fontSize: 22 }} />,
-    title: 'Natural Speech',
-    text: 'Speak naturally and comfortably. There’s no need to change your usual way of speaking.',
+    title: t('voiceAnalysis.naturalSpeech'),
+    text: t('voiceAnalysis.naturalSpeechDesc'),
   },
 ];
 
@@ -31,7 +31,6 @@ const processVoice = () => {
   alert("Voice recording functionality is not implemented yet. This is a placeholder for future development.");
 }
 
-const VoiceAnalysis = () => {
   const [recording, setRecording] = useState(false);
   const [audioURL, setAudioURL] = useState(null);
   const [err, setErr] = useState("");

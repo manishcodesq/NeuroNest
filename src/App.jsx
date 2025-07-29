@@ -9,12 +9,17 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
+import './App.css'
 
 // Lazy loaded pages
 const Home = React.lazy(() => import('./pages/Home'));
 const CognitiveAssessments = React.lazy(() => import('./pages/CognitiveAssessments'));
 const VoiceAnalysis = React.lazy(() => import('./pages/VoiceAnalysis'));
 const DashboardAlerts = React.lazy(() => import('./pages/DashboardAlerts'));
+const MemoryGames = React.lazy(() => import("./pages/MemoryGames"));
+const FocusExercises = React.lazy(() => import("./pages/FocusExercises"));
+const WordActivities = React.lazy(() => import("./pages/WordActivities"));
+const VisualPuzzles = React.lazy(() => import("./pages/VisualPuzzles"));
 
 // Create theme with Poppins font
 const theme = createTheme({
@@ -71,23 +76,6 @@ const LoadingFallback = () => (
     Loading...
   </div>
 );
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Navbar from "./components/Navbar";
-
-// Placeholder imports for pages (to be created)
-const Home = React.lazy(() => import("./pages/Home"));
-const CognitiveAssessments = React.lazy(() => import("./pages/CognitiveAssessments"));
-const VoiceAnalysis = React.lazy(() => import("./pages/VoiceAnalysis"));
-const DashboardAlerts = React.lazy(() => import("./pages/DashboardAlerts"));
-const MemoryGames = React.lazy(() => import("./pages/MemoryGames"));
-const FocusExercises = React.lazy(() => import("./pages/FocusExercises"));
-const WordActivities = React.lazy(() => import("./pages/WordActivities"));
-const VisualPuzzles = React.lazy(() => import("./pages/VisualPuzzles"));
 
 function App() {
   return (
@@ -105,14 +93,6 @@ function App() {
             {/* Protected Routes */}
             <Route 
               path="/cognitive-assessment" 
-              element={
-                <ProtectedRoute>
-                  <CognitiveAssessments />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/assessments" 
               element={
                 <ProtectedRoute>
                   <CognitiveAssessments />
