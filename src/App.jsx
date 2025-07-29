@@ -9,12 +9,17 @@ import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
+import './App.css'
 
 // Lazy loaded pages
 const Home = React.lazy(() => import('./pages/Home'));
 const CognitiveAssessments = React.lazy(() => import('./pages/CognitiveAssessments'));
 const VoiceAnalysis = React.lazy(() => import('./pages/VoiceAnalysis'));
 const DashboardAlerts = React.lazy(() => import('./pages/DashboardAlerts'));
+const MemoryGames = React.lazy(() => import("./pages/MemoryGames"));
+const FocusExercises = React.lazy(() => import("./pages/FocusExercises"));
+const WordActivities = React.lazy(() => import("./pages/WordActivities"));
+const VisualPuzzles = React.lazy(() => import("./pages/VisualPuzzles"));
 
 // Create theme with Poppins font
 const theme = createTheme({
@@ -95,14 +100,6 @@ function App() {
               } 
             />
             <Route 
-              path="/assessments" 
-              element={
-                <ProtectedRoute>
-                  <CognitiveAssessments />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
               path="/voice" 
               element={
                 <ProtectedRoute>
@@ -118,7 +115,38 @@ function App() {
                 </ProtectedRoute>
               } 
             />
-            
+            <Route 
+              path="/memory-games" 
+              element={
+                <ProtectedRoute>
+                  <MemoryGames />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/focus-exercises" 
+              element={
+                <ProtectedRoute>
+                  <FocusExercises />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/word-activities" 
+              element={
+                <ProtectedRoute>
+                  <WordActivities />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/visual-puzzles" 
+              element={
+                <ProtectedRoute>
+                  <VisualPuzzles />
+                </ProtectedRoute>
+              } 
+            />
             {/* Catch-all route for 404 */}
             <Route 
               path="*" 

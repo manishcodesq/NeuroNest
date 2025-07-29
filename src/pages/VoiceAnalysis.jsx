@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use, useRef, useState } from "react";
 import { Box, Typography, Grid, Paper, Button, Stack } from "@mui/material";
 import MicIcon from '@mui/icons-material/Mic';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
@@ -9,23 +9,63 @@ import { useTranslation } from 'react-i18next';
 const VoiceAnalysis = () => {
   const { t } = useTranslation();
 
-  const tips = [
-    {
-      icon: <AccessTimeIcon sx={{ color: '#b39ddb', fontSize: 22 }} />,
-      title: t('voiceAnalysis.recordingDuration'),
-      text: t('voiceAnalysis.recordingDurationDesc'),
-    },
-    {
-      icon: <SurroundSoundIcon sx={{ color: '#81c784', fontSize: 22 }} />,
-      title: t('voiceAnalysis.clearEnvironment'),
-      text: t('voiceAnalysis.clearEnvironmentDesc'),
-    },
-    {
-      icon: <VolumeUpIcon sx={{ color: '#4fc3f7', fontSize: 22 }} />,
-      title: t('voiceAnalysis.naturalSpeech'),
-      text: t('voiceAnalysis.naturalSpeechDesc'),
-    },
-  ];
+const tips = [
+  {
+    icon: <AccessTimeIcon sx={{ color: '#b39ddb', fontSize: 22 }} />,
+    title: t('voiceAnalysis.recordingDuration'),
+    text: t('voiceAnalysis.recordingDurationDesc'),
+  },
+  {
+    icon: <SurroundSoundIcon sx={{ color: '#81c784', fontSize: 22 }} />,
+    title: t('voiceAnalysis.clearEnvironment'),
+    text: t('voiceAnalysis.clearEnvironmentDesc'),
+  },
+  {
+    icon: <VolumeUpIcon sx={{ color: '#4fc3f7', fontSize: 22 }} />,
+    title: t('voiceAnalysis.naturalSpeech'),
+    text: t('voiceAnalysis.naturalSpeechDesc'),
+  },
+];
+
+const processVoice = () => {
+  alert("Voice recording functionality is not implemented yet. This is a placeholder for future development.");
+}
+
+  const [recording, setRecording] = useState(false);
+  const [audioURL, setAudioURL] = useState(null);
+  const [err, setErr] = useState("");
+  const mediaRecorderRef = useRef(null);
+  const audioChucksRef = useRef([]);
+
+  const startRecording = async () => {
+    setErr("");
+    setAudioURL(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      audioChucksRef.current = [];
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        audioChucksRef.current.push(event.data);
+      };
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(audioChucksRef.current, { type: 'audio/webm' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        setAudioURL(audioUrl);
+        console.log("Audio URL:", audioUrl);
+      };
+      mediaRecorderRef.current.start();
+      setRecording(true);
+    } catch(err) {
+      setErr("Failed to access microphone. Please check your permissions.");
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && recording) {
+      mediaRecorderRef.current.stop();
+      setRecording(false);
+    }
+  };
 
   return (
     <Box sx={{ bgcolor: '#fcfcff', minHeight: '100vh', py: 6, px: 0, width: '100vw', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
@@ -61,20 +101,57 @@ const VoiceAnalysis = () => {
             <Box sx={{ bgcolor: '#ede7f6', borderRadius: '50%', p: 3, mb: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <MicIcon sx={{ fontSize: 56, color: '#9575cd' }} />
             </Box>
-            <Button variant="contained" startIcon={<MicIcon />} sx={{
-              bgcolor: '#9575cd',
-              color: '#fff',
-              fontFamily: 'Poppins',
-              fontWeight: 600,
-              borderRadius: 2,
-              fontSize: '1.1rem',
-              px: 4,
-              py: 1.5,
-              boxShadow: 'none',
-              '&:hover': { bgcolor: '#7e57c2' },
-            }}>
-              {t('voiceAnalysis.startRecording')}
-            </Button>
+            <Stack direction="row" spacing={2}>
+              <Button variant="contained" startIcon={<MicIcon />} sx={{
+                bgcolor: '#9575cd',
+                color: '#fff',
+                fontFamily: 'Poppins',
+                fontWeight: 600,
+                borderRadius: 2,
+                fontSize: '1.1rem',
+                px: 4,
+                py: 1.5,
+                boxShadow: 'none',
+                '&:hover': { bgcolor: '#7e57c2' },
+              }}
+              onClick={startRecording}
+              disabled={recording}
+              >
+                Start Recording
+              </Button>
+              <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#bdbdbd",
+                    color: "#fff",
+                    fontFamily: "Poppins",
+                    fontWeight: 600,
+                    borderRadius: 2,
+                    fontSize: "1.1rem",
+                    px: 4,
+                    py: 1.5,
+                    boxShadow: "none",
+                    "&:hover": { bgcolor: "#757575" },
+                  }}
+                  onClick={stopRecording}
+                  disabled={!recording}
+                >
+                  Stop
+                </Button>
+              </Stack>
+              {err && (
+              <Typography sx={{ mt: 2, color: "#d32f2f", fontWeight: 600 }}>
+                {err}
+              </Typography>
+            )}
+            {audioURL && (
+              <Box sx={{ mt: 3, width: "100%" }}>
+                <Typography sx={{ fontFamily: "Poppins", fontWeight: 600, color: "#222", mb: 1 }}>
+                  Your Recording:
+                </Typography>
+                <audio controls src={audioURL} style={{ width: "100%" }} />
+              </Box>
+            )}
           </Paper>
         </Grid>
         <Grid item xs={12} md={5} sx={{ display: 'flex', justifyContent: 'center' }}>

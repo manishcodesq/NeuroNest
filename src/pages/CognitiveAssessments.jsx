@@ -5,16 +5,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import ExtensionIcon from '@mui/icons-material/Extension';
-import { useTranslation } from 'react-i18next';
+import { useNavigate } from "react-router-dom";
 
-const YourComponent = () => {
-  const { t } = useTranslation();
-  
-  // Now replace hardcoded text like:
-  // "Welcome to NeuroNest" → {t('home.welcome')}
-  // "Get Started" → {t('home.getStarted')}
-  // etc.
-}
 const assessments = [
   {
     title: 'Memory Games',
@@ -54,7 +46,35 @@ const assessments = [
   },
 ];
 
+
 const CognitiveAssessments = () => {
+
+const navigate = useNavigate();
+
+const handleRequest = (title) => {
+  if(title === 'Memory Games')
+  {
+    navigate(`/memory-games`);
+  }
+  else if(title === ('Focus Exercises'))
+  {
+    navigate(`/focus-exercises`);
+  }
+  else if(title === ('Word Activities')) 
+  {
+    navigate(`/word-activities`);
+  }
+  else if(title === ('Visual Puzzles'))
+  {
+    navigate('/visual-puzzles');
+  }
+  else
+  {
+    throw new Error("404! Page not found.");
+  }  
+}
+
+
   return (
     <Box sx={{ bgcolor: '#fcfcff', minHeight: '100vh', py: 6, px: 0, width: '100vw', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
       <Typography variant="h2" sx={{ fontWeight: 700, fontFamily: 'Poppins', color: '#222', textAlign: 'center', mb: 1 }}>
@@ -114,6 +134,9 @@ const CognitiveAssessments = () => {
                 alignSelf: 'flex-start',
                 boxShadow: 'none',
                 '&:hover': { bgcolor: a.buttonColor, opacity: 0.93 },
+              }}
+              onClick= {() => {
+                handleRequest(a.title);
               }}>
                 Start Assessment
               </Button>
