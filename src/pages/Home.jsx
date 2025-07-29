@@ -9,8 +9,10 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <Box sx={{ bgcolor: '#fcfcff', minHeight: '100vh', pb: 8, width: '100vw', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
       {/* Hero Section */}
@@ -43,10 +45,10 @@ const Home = () => {
           Our AI-powered platform provides gentle, comprehensive cognitive assessments designed specifically for elderly users. We help detect early signs of dementia with care, compassion, and cutting-edge technology.
         </Typography>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
-          <Button variant="contained" size="large" sx={{ bgcolor: '#9575cd', fontWeight: 600, fontFamily: 'Poppins', px: 4, py: 1.5, borderRadius: 3, fontSize: '1.1rem', '&:hover': { bgcolor: '#7e57c2' } }}>
+          <Button variant="contained" size="large" sx={{ bgcolor: '#9575cd', fontWeight: 600, fontFamily: 'Poppins', px: 4, py: 1.5, borderRadius: 3, fontSize: '1.1rem', '&:hover': { bgcolor: '#7e57c2' } }}onClick={() => navigate('/assessments')}>
             Get Started
           </Button>
-          <Button variant="outlined" size="large" sx={{ fontWeight: 600, fontFamily: 'Poppins', px: 4, py: 1.5, borderRadius: 3, fontSize: '1.1rem', bgcolor: '#fff', borderColor: '#9575cd', color: '#222', '&:hover': { bgcolor: '#ede7f6' } }}>
+          <Button variant="outlined" size="large" sx={{ fontWeight: 600, fontFamily: 'Poppins', px: 4, py: 1.5, borderRadius: 3, fontSize: '1.1rem', bgcolor: '#fff', borderColor: '#9575cd', color: '#222', '&:hover': { bgcolor: '#ede7f6' } }}onClick={() => navigate('/dashboard')}>
             View Dashboard
           </Button>
         </Stack>
