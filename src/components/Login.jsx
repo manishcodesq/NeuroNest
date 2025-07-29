@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import { 
   Box, 
   Typography, 
@@ -23,6 +24,7 @@ import {
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const [formData, setFormData] = useState({
@@ -137,7 +139,7 @@ const Login = () => {
             }}
             disableElevation
           >
-            Welcome Back
+            {t('auth.welcomeBack')}
           </Button>
           <Typography variant="h4" sx={{ 
             fontWeight: 700, 
@@ -145,14 +147,14 @@ const Login = () => {
             color: '#222',
             mb: 1
           }}>
-            Sign In to NeuroNest
+            {t('auth.signInTitle')}
           </Typography>
           <Typography sx={{ 
             color: '#757575', 
             fontFamily: 'Poppins',
             fontSize: '1rem'
           }}>
-            Continue your cognitive health journey
+            {t('auth.signInSubtitle')}
           </Typography>
         </Box>
 
@@ -170,7 +172,7 @@ const Login = () => {
               fullWidth
               name="email"
               type="email"
-              label="Email Address"
+              label={t('auth.email')}
               value={formData.email}
               onChange={handleChange}
               error={!!errors.email}
@@ -203,7 +205,7 @@ const Login = () => {
               fullWidth
               name="password"
               type={showPassword ? 'text' : 'password'}
-              label="Password"
+              label={t('auth.password')}
               value={formData.password}
               onChange={handleChange}
               error={!!errors.password}
@@ -265,14 +267,14 @@ const Login = () => {
                 }
               }}
             >
-              {loading ? 'Signing In...' : 'Sign In'}
+              {loading ? t('auth.signingIn') : t('auth.signInButton')}
             </Button>
           </Stack>
         </Box>
 
         {/* Divider */}
         <Divider sx={{ my: 3, fontFamily: 'Poppins', color: '#757575' }}>
-          or continue with
+          {t('auth.orContinueWith')}
         </Divider>
 
         {/* Social Login */}
@@ -295,7 +297,7 @@ const Login = () => {
               }
             }}
           >
-            Google
+            {t('auth.google')}
           </Button>
           <Button
             variant="outlined"
@@ -315,14 +317,14 @@ const Login = () => {
               }
             }}
           >
-            Facebook
+            {t('auth.facebook')}
           </Button>
         </Stack>
 
         {/* Sign Up Link */}
         <Box sx={{ textAlign: 'center', mt: 3 }}>
           <Typography sx={{ color: '#757575', fontFamily: 'Poppins' }}>
-            Don't have an account?{' '}
+            {t('auth.dontHaveAccount')}{' '}
             <Link 
               to="/signup"
               style={{ 
@@ -331,7 +333,7 @@ const Login = () => {
                 fontWeight: 600
               }}
             >
-              Sign Up
+              {t('auth.signUpButton')}
             </Link>
           </Typography>
         </Box>
