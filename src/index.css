@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body, html, #root {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 16px;
+  background: #e8f0fe;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, button, input, label, .MuiTypography-root, .MuiButton-root {
+  font-family: 'Poppins', Arial, sans-serif !important;
+}
+
+/* Accent color for buttons/links */
+button, .MuiButton-root {
+  background: #4db6ac;
+  color: #fff;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  padding: 0.5em 1.2em;
+  margin: 0.2em;
+}
+
+/* Large buttons for accessibility */
+button, .MuiButton-root {
+  min-width: 120px;
+  min-height: 48px;
+  font-size: 1.1rem;
+}
+
+/* Navbar specific overrides */
+.MuiAppBar-root {
+  box-shadow: none;
+  border-bottom: 2px solid #6a5acd22;
+}
