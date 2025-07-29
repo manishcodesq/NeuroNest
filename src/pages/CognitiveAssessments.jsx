@@ -5,7 +5,16 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import ExtensionIcon from '@mui/icons-material/Extension';
+import { useTranslation } from 'react-i18next';
 
+const YourComponent = () => {
+  const { t } = useTranslation();
+  
+  // Now replace hardcoded text like:
+  // "Welcome to NeuroNest" → {t('home.welcome')}
+  // "Get Started" → {t('home.getStarted')}
+  // etc.
+}
 const assessments = [
   {
     title: 'Memory Games',
