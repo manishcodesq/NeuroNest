@@ -62,7 +62,7 @@ const Home = () => {
               px: 4, py: 1.5, borderRadius: 3, fontSize: '1.1rem',
               '&:hover': { bgcolor: '#7e57c2' }
             }}
-            onClick={() => navigate('/assessments')}
+            onClick={() => navigate('/cognitive-assessment')}
           >
             {t('home.getStarted')}
           </Button>
