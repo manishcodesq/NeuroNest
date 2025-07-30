@@ -6,18 +6,24 @@ import {
   Paper,
   Button,
   Stack,
-  Chip
+  Chip,
+  Alert,
+  CircularProgress
 } from "@mui/material";
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import ExtensionIcon from '@mui/icons-material/Extension';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import StopIcon from '@mui/icons-material/Stop';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 import FocusTimer from '../components/FocusTimer';
 import MemoryGames from '../components/MemoryGames';
 import VisualPuzzles from '../components/VisualPuzzles';
 import WordActivities from '../components/WordActivities';
+import useScreenRecorder from '../hooks/useScreenRecorder';
 
 const assessments = [
   {
@@ -65,6 +71,56 @@ const assessments = [
 const CognitiveAssessments = () => {
   // State for which assessment component to show (null means show cards)
   const [activeAssessment, setActiveAssessment] = useState(null);
+  const [savingRecording, setSavingRecording] = useState(false);
+  const [saveMessage, setSaveMessage] = useState(null);
+  
+  // Screen recording hook
+  const {
+    isRecording,
+    recordingBlob,
+    error,
+    startRecording,
+    stopRecording,
+    saveRecording
+  } = useScreenRecorder();
+
+  // Handle start recording
+  const handleStartRecording = async () => {
+    setSaveMessage(null);
+    try {
+      await startRecording();
+    } catch (err) {
+      console.error('Failed to start recording:', err);
+    }
+  };
+
+  // Handle stop recording and auto-save
+  const handleStopAndSaveRecording = async () => {
+    setSavingRecording(true);
+    setSaveMessage(null);
+    
+    // Stop recording first
+    stopRecording();
+    
+    // Wait a moment for the recording to finalize
+    setTimeout(async () => {
+      try {
+        // Get user ID from localStorage (or use anonymous)
+        const userId = localStorage.getItem('userId') || 'anonymous';
+        const result = await saveRecording(userId);
+        
+        if (result.success) {
+          setSaveMessage({ type: 'success', text: 'Recording saved successfully!' });
+        } else {
+          setSaveMessage({ type: 'error', text: result.error || 'Failed to save recording' });
+        }
+      } catch (error) {
+        setSaveMessage({ type: 'error', text: 'Error saving recording' });
+      } finally {
+        setSavingRecording(false);
+      }
+    }, 1000);
+  };
 
   const renderAssessmentComponent = () => {
     switch (activeAssessment) {
@@ -97,6 +153,76 @@ const CognitiveAssessments = () => {
         fontFamily: 'Poppins',
       }}
     >
+      {/* Recording Controls - Always visible at top right */}
+      <Box sx={{ position: 'fixed', top: 80, right: 20, zIndex: 1000 }}>
+        <Paper sx={{ 
+          p: 2, 
+          bgcolor: 'rgba(255,255,255,0.95)', 
+          backdropFilter: 'blur(10px)',
+          borderRadius: 3,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+        }}>
+          <Stack direction="row" spacing={2} alignItems="center">
+            {!isRecording ? (
+              <>
+                <VideocamIcon sx={{ color: '#9575cd', fontSize: 24 }} />
+                <Typography sx={{ color: '#9575cd', fontWeight: 600, fontSize: '0.9rem' }}>
+                  Ready to Record
+                </Typography>
+                <Button
+                  variant="contained"
+                  size="small"
+                  startIcon={<FiberManualRecordIcon />}
+                  sx={{ 
+                    bgcolor: '#9575cd', 
+                    '&:hover': { bgcolor: '#7e57c2' },
+                    fontSize: '0.8rem'
+                  }}
+                  onClick={handleStartRecording}
+                >
+                  Start Recording
+                </Button>
+              </>
+            ) : (
+              <>
+                <FiberManualRecordIcon sx={{ color: '#f44336', fontSize: 24 }} />
+                <Typography sx={{ color: '#f44336', fontWeight: 600, fontSize: '0.9rem' }}>
+                  Recording...
+                </Typography>
+                <Button
+                  variant="contained"
+                  size="small"
+                  startIcon={savingRecording ? <CircularProgress size={16} color="inherit" /> : <StopIcon />}
+                  sx={{ 
+                    bgcolor: '#f44336', 
+                    '&:hover': { bgcolor: '#d32f2f' },
+                    fontSize: '0.8rem'
+                  }}
+                  onClick={handleStopAndSaveRecording}
+                  disabled={savingRecording}
+                >
+                  {savingRecording ? 'Saving...' : 'Stop & Save'}
+                </Button>
+              </>
+            )}
+          </Stack>
+        </Paper>
+      </Box>
+
+      {/* Error Alert */}
+      {error && (
+        <Alert severity="error" sx={{ mb: 3, mx: 3 }}>
+          {error}
+        </Alert>
+      )}
+
+      {/* Save Message Alert */}
+      {saveMessage && (
+        <Alert severity={saveMessage.type} sx={{ mb: 3, mx: 3 }}>
+          {saveMessage.text}
+        </Alert>
+      )}
+
       {activeAssessment ? (
         <>
           {/* Back button to assessment cards */}
@@ -129,7 +255,7 @@ const CognitiveAssessments = () => {
             sx={{
               color: '#90a4ae',
               textAlign: 'center',
-              mb: 5,
+              mb: 2,
               fontSize: '1.15rem',
               maxWidth: 700,
               mx: 'auto',
@@ -138,6 +264,22 @@ const CognitiveAssessments = () => {
             These friendly activities help us understand how you're doing. Take your time and
             don't worry about getting everything perfect.
           </Typography>
+
+          {/* Recording Info */}
+          <Box sx={{ textAlign: 'center', mb: 4 }}>
+            <Typography sx={{ 
+              color: '#9575cd', 
+              fontSize: '1rem', 
+              fontWeight: 500,
+              bgcolor: '#f3e5f5',
+              px: 3,
+              py: 1,
+              borderRadius: 3,
+              display: 'inline-block'
+            }}>
+              💡 Use the recording controls in the top-right corner to capture your assessment session
+            </Typography>
+          </Box>
 
           <Grid container spacing={4} justifyContent="center" sx={{ width: '100%', m: 0 }}>
             {assessments.map((a) => (
