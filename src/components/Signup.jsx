@@ -98,7 +98,20 @@ const Signup = () => {
     setLoading(true);
     
     try {
-      // Simulate API call
+        // Simulate API call
+      const response = await fetch('http://localhost:4000/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Store authentication state
