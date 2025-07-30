@@ -6,21 +6,22 @@ import User from '../models/User.js';
 
 const router = Router();
 
-const registerUser = () => {
-  router.post('/signup', async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+// POST /api/auth/signup
+router.post('/signup', async (req, res) => {
+  const { name, email, password } = req.body;
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ error: 'Email already registered' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const response = await User.create({ firstName, lastName, email, password: hashedPassword });
+    const newUser = await User.create({ name, email, password: hashedPassword });
     
     res.json({ 
       message: 'Signup successful',
-      response
-     });
+      user: { id: newUser._id, name: newUser.name, email: newUser.email }
+    });
   } catch (err) {
+    console.error('Signup error:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -42,6 +43,7 @@ const loginUser = () => {
       user: { id: user._id, name: user.name, email: user.email }
     });
   } catch (err) {
+    console.error('Login error:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });

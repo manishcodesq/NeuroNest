@@ -80,18 +80,33 @@ const Login = () => {
     setLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // API call to backend
+      const response = await fetch('http://localhost:4000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
       
-      // Store authentication state
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('userEmail', formData.email);
-      
-      // Redirect to intended page or home
-      navigate(from, { replace: true });
-      
+      if (response.ok) {
+        // Store authentication data
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.user.id);
+        localStorage.setItem('userEmail', data.user.email);
+        localStorage.setItem('userName', data.user.name);
+        
+        // Redirect to intended page or home
+        navigate(from, { replace: true });
+      } else {
+        setErrors({ submit: data.error || 'Login failed' });
+      }
     } catch (error) {
-      setErrors({ submit: 'Invalid email or password' });
+      console.error('Login error:', error);
+      setErrors({ submit: 'Network error. Please try again.' });
     } finally {
       setLoading(false);
     }

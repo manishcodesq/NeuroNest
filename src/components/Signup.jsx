@@ -99,34 +99,29 @@ const Signup = () => {
     setLoading(true);
     
     try {
-        // Simulate API call
-      const response = await fetch('http://localhost:4000/api/signup', {
+      // API call to backend
+      const response = await fetch('http://localhost:4000/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        password: formData.password,
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          password: formData.password,
         }),
       });
 
       const data = await response.json();
 
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Store authentication state
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('userEmail', formData.email);
-      localStorage.setItem('userName', `${formData.firstName} ${formData.lastName}`);
-      
-      // Redirect to home page
-      if (data) {
-        navigate('/', { replace: true });
+      if (response.ok) {
+        // Show success message and redirect to login
+        alert('Account created successfully! Please login.');
+        navigate('/login', { replace: true });
+      } else {
+        setErrors({ submit: data.error || 'Registration failed. Please try again.' });
       }
-      
     } catch (error) {
-      setErrors({ submit: 'Registration failed. Please try again.' });
+      console.error('Signup error:', error);
+      setErrors({ submit: 'Network error. Please try again.' });
     } finally {
       setLoading(false);
     }

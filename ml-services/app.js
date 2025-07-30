@@ -5,46 +5,76 @@ dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
+import authRoutes from './routes/auth.js';
+import voiceRoutes from './routes/voice.js';
+import testRoutes from './routes/test.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
-app.use(cors({
-  origin: process.env.CORS_ORIGIN,
-  credentials: true
-}));
+app.use(cors());
+app.use(express.json());
 
+// Create Media folder in root directory if it doesn't exist
+const mediaFolder = path.join(__dirname, "..", "Media");
+if (!fs.existsSync(mediaFolder)) {
+  fs.mkdirSync(mediaFolder, { recursive: true });
+  console.log('Media folder created at:', mediaFolder);
+}
 
-app.use(express.json({limit: '16kb'}));
-app.use(express.urlencoded({extended: true, limit: '16kb'}));
-app.use(express.static("public"));
-app.use(cookieParser()); 
+// Configure multer for video uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, mediaFolder);
+  },
+  filename: function (req, file, cb) {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const userId = req.body.userId || 'anonymous';
+    cb(null, `cognitive-assessment-${userId}-${timestamp}.webm`);
+  }
+});
 
+const upload = multer({ 
+  storage: storage,
+  limits: {
+    fileSize: 100 * 1024 * 1024 // 100MB limit
+  }
+});
 
-import {
- registerUser,
- loginUser 
-}from './routes/auth.js';
-import voiceRoutes from './routes/voice.js';
-import testRoutes from './routes/test.js';
+// Screen recording upload endpoint
+app.post("/api/upload-recording", upload.single("video"), (req, res) => {
+  try {
+    if (req.file) {
+      console.log('Recording saved:', req.file.filename);
+      res.status(200).json({ 
+        message: "Recording saved successfully",
+        filename: req.file.filename,
+        path: req.file.path
+      });
+    } else {
+      res.status(400).json({ error: "No file uploaded" });
+    }
+  } catch (error) {
+    console.error('Upload error:', error);
+    res.status(500).json({ error: "File upload failed" });
+  }
+});
+
 // Routes
 app.use('/api/voice', voiceRoutes);
 app.use('/api/tests', testRoutes);
-app.use('/api/signup', registerUser);
-app.use('/api/login', loginUser);
+app.use('/api/auth', authRoutes); // Changed to use /api/auth as base
 
-const connectDB = async () => {
-try {
-  await mongoose.connect(process.env.MONGO_URI, {dbName: 'test'});
-  console.log('MongoDB connected')
-}
-catch(err){
-  console.error('MongoDB connection error:', err);
-}
-};
-
-connectDB();
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
