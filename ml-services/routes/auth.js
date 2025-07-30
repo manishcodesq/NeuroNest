@@ -1,10 +1,10 @@
 // ml-services/routes/auth.js
-import express from 'express';
+import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
-const router = express.Router();
+const router = Router();
 
 // POST /api/auth/signup
 router.post('/signup', async (req, res) => {
@@ -26,14 +26,13 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// POST /api/auth/login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ error: 'User not found' });
 
-    const validPass = await bcrypt.compare(password, user.password);
+    const validPass = bcrypt.compare(password, user.password);
     if (!validPass) return res.status(400).json({ error: 'Incorrect password' });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
