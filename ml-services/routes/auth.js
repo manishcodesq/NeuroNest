@@ -1,33 +1,39 @@
 // ml-services/routes/auth.js
-import express from 'express';
+import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
-const router = express.Router();
+const router = Router();
 
-router.post('api/signup', async (req, res) => {
-  const { name, email, password } = req.body;
+const registerUser = () => {
+  router.post('/signup', async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ error: 'Email already registered' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({ name, email, password: hashedPassword });
+    const response = await User.create({ firstName, lastName, email, password: hashedPassword });
     
-    res.json({ message: 'Signup successful' });
+    res.json({ 
+      message: 'Signup successful',
+      response
+     });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 });
+}
 
-router.post('api/login', async (req, res) => {
+const loginUser = () => {
+  router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ error: 'User not found' });
 
-    const validPass = await bcrypt.compare(password, user.password);
+    const validPass = bcrypt.compare(password, user.password);
     if (!validPass) return res.status(400).json({ error: 'Incorrect password' });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
@@ -39,5 +45,9 @@ router.post('api/login', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+}
 
-export default router;
+export {
+  registerUser,
+  loginUser
+};

@@ -24,6 +24,7 @@ import {
   Facebook as FacebookIcon 
 } from "@mui/icons-material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import router from "../../ml-services/routes/auth";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -120,7 +121,9 @@ const Signup = () => {
       localStorage.setItem('userName', `${formData.firstName} ${formData.lastName}`);
       
       // Redirect to home page
-      navigate('/', { replace: true });
+      if (data) {
+        navigate('/', { replace: true });
+      }
       
     } catch (error) {
       setErrors({ submit: 'Registration failed. Please try again.' });
