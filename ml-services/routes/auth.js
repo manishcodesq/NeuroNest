@@ -6,22 +6,28 @@ import User from '../models/User.js';
 
 const router = express.Router();
 
-router.post('api/signup', async (req, res) => {
+// POST /api/auth/signup
+router.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ error: 'Email already registered' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({ name, email, password: hashedPassword });
+    const newUser = await User.create({ name, email, password: hashedPassword });
     
-    res.json({ message: 'Signup successful' });
+    res.json({ 
+      message: 'Signup successful',
+      user: { id: newUser._id, name: newUser.name, email: newUser.email }
+    });
   } catch (err) {
+    console.error('Signup error:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-router.post('api/login', async (req, res) => {
+// POST /api/auth/login
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -36,6 +42,7 @@ router.post('api/login', async (req, res) => {
       user: { id: user._id, name: user.name, email: user.email }
     });
   } catch (err) {
+    console.error('Login error:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
