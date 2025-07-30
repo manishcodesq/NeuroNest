@@ -75,7 +75,7 @@ const WordActivities = () => {
         maxWidth: 600,
         mx: 'auto',
         px: 3,
-        bgcolor: '#fdf6e3', // warm and comfortable background
+        bgcolor: '#e8f5e9', // warm and comfortable background
         borderRadius: 3,
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
         fontFamily: "'Noto Sans', 'Poppins', sans-serif",

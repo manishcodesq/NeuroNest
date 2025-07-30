@@ -127,7 +127,7 @@ const FocusTimer = () => {
 
       <Stack direction="row" spacing={2} justifyContent="center" sx={{ mb: 3 }}>
         {!isRunning && (
-          <Button variant="contained" onClick={startTimer} sx={{ px: 4, fontWeight: 600, fontFamily: 'Poppins' }}>
+          <Button variant="contained" onClick={startTimer} sx={{ px: 4, bgcolor: "#90caf9", fontWeight: 600, fontFamily: 'Poppins' }}>
             Start Focus Session
           </Button>
         )}
@@ -152,7 +152,7 @@ const FocusTimer = () => {
           : 'Ready to begin your focus session'}
       </Typography>
 
-      <LinearProgress variant="determinate" value={progressValue} sx={{ height: 10, borderRadius: 5 }} />
+      <LinearProgress variant="determinate" value={progressValue} sx={{ height: 10, bgcolor:'#e3f2fd', borderRadius: 5 }} />
     </Box>
   );
 };
