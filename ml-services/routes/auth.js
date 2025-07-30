@@ -25,10 +25,8 @@ router.post('/signup', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-}
 
-const loginUser = () => {
-  router.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -47,9 +45,5 @@ const loginUser = () => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-}
 
-export {
-  registerUser,
-  loginUser
-};
+export default router;
