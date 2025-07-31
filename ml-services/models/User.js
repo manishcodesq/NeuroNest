@@ -2,10 +2,9 @@
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
+  name: String,
   email: { type: String, unique: true },
-  caretakerEmail: { type: String },
+  caretakerEmail: { type: String, unique: true }, // Optional field for caretaker's email
   password: String
 });
 

@@ -100,7 +100,10 @@ const Login = () => {
         localStorage.setItem('userName', data.user.name);
         
         // Redirect to intended page or home
-        navigate(from, { replace: true });
+      if (response.ok) {
+        alert('Logged in successfully!');
+        navigate('/', { replace: true });
+      }
       } else {
         setErrors({ submit: data.error || 'Login failed' });
       }

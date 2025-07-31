@@ -67,10 +67,6 @@ app.post("/api/upload-recording", upload.single("video"), (req, res) => {
   }
 });
 
-// Routes
-app.use('/api/voice', voiceRoutes);
-app.use('/api/tests', testRoutes);
-app.use('/api/auth', authRoutes); // Changed to use /api/auth as base
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
@@ -78,5 +74,10 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
+
+// Routes
+app.use('/api/voice', voiceRoutes);
+app.use('/api/tests', testRoutes);
+app.use('/api/auth', authRoutes); // Changed to use /api/auth as base
 
 export default app;
