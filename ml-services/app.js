@@ -12,7 +12,9 @@ import { fileURLToPath } from 'url';
 
 import authRoutes from './routes/auth.js';
 import voiceRoutes from './routes/voice.js';
-import testRoutes from './routes/test.js';
+import cognitiveRoutes from './routes/cognitiveRoutes.js';
+import testRoutes from './routes/test.js'
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,7 +24,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Create Media folder in root directory if it doesn't exist
+// Create Media folder in root directory 
 const mediaFolder = path.join(__dirname, "..", "Media");
 if (!fs.existsSync(mediaFolder)) {
   fs.mkdirSync(mediaFolder, { recursive: true });
@@ -48,7 +50,7 @@ const upload = multer({
   }
 });
 
-// Screen recording upload endpoint
+// Screen recording upload post route
 app.post("/api/upload-recording", upload.single("video"), (req, res) => {
   try {
     if (req.file) {
@@ -67,9 +69,12 @@ app.post("/api/upload-recording", upload.single("video"), (req, res) => {
   }
 });
 
+
+app.use('/api/cognitive', cognitiveRoutes);
 // Routes
 app.use('/api/voice', voiceRoutes);
 app.use('/api/tests', testRoutes);
+
 app.use('/api/auth', authRoutes); // Changed to use /api/auth as base
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
