@@ -24,6 +24,9 @@ import MemoryGames from '../components/MemoryGames';
 import VisualPuzzles from '../components/VisualPuzzles';
 import WordActivities from '../components/WordActivities';
 import useScreenRecorder from '../hooks/useScreenRecorder';
+import { useTranslation } from 'react-i18next';
+
+
 
 const assessments = [
   {
@@ -73,7 +76,7 @@ const CognitiveAssessments = () => {
   const [activeAssessment, setActiveAssessment] = useState(null);
   const [savingRecording, setSavingRecording] = useState(false);
   const [saveMessage, setSaveMessage] = useState(null);
-  
+  const { t } = useTranslation();
   // Screen recording hook
   const {
     isRecording,
@@ -243,7 +246,7 @@ const CognitiveAssessments = () => {
             variant="h2"
             sx={{ fontWeight: 700, color: '#222', textAlign: 'center', mb: 1 }}
           >
-            Cognitive Assessments
+            {t('cognitiveAssessments.title')}
           </Typography>
           <Typography
             variant="h5"

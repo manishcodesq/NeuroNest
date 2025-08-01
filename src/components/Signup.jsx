@@ -31,6 +31,7 @@ const Signup = () => {
     firstName: '',
     lastName: '',
     email: '',
+    caretakerEmail: '',        // New field added
     password: '',
     confirmPassword: '',
     agreeToTerms: false
@@ -71,6 +72,12 @@ const Signup = () => {
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email';
     }
+
+    if (formData.caretakerEmail) {
+      if (!/\S+@\S+\.\S+/.test(formData.caretakerEmail)) {
+        newErrors.caretakerEmail = 'Please enter a valid caretaker\'s email';
+      }
+    }
     
     if (!formData.password) {
       newErrors.password = 'Password is required';
@@ -98,13 +105,14 @@ const Signup = () => {
     setLoading(true);
     
     try {
-      // API call to backend
+      // API call to backend with new caretakerEmail field included
       const response = await fetch('http://localhost:4000/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: `${formData.firstName} ${formData.lastName}`,
           email: formData.email,
+          caretakerEmail: formData.caretakerEmail,   // Include caretaker email here
           password: formData.password,
         }),
       });
@@ -112,7 +120,6 @@ const Signup = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Show success message and redirect to login
         alert('Account created successfully! Please login.');
         navigate('/login', { replace: true });
       } else {
@@ -257,6 +264,7 @@ const Signup = () => {
               />
             </Stack>
 
+            {/* User Email Field */}
             <TextField
               fullWidth
               name="email"
@@ -266,6 +274,40 @@ const Signup = () => {
               onChange={handleChange}
               error={!!errors.email}
               helperText={errors.email}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email sx={{ color: '#9575cd', fontSize: 20 }} />
+                  </InputAdornment>
+                ),
+                sx: { fontFamily: 'Poppins' }
+              }}
+              InputLabelProps={{
+                sx: { fontFamily: 'Poppins' }
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 3,
+                  '&:hover fieldset': {
+                    borderColor: '#9575cd',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#9575cd',
+                  },
+                },
+              }}
+            />
+
+            {/* Caretaker's Email Field */}
+            <TextField
+              fullWidth
+              name="caretakerEmail"
+              type="email"
+              label="Caretaker's Email"
+              value={formData.caretakerEmail}
+              onChange={handleChange}
+              error={!!errors.caretakerEmail}
+              helperText={errors.caretakerEmail}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

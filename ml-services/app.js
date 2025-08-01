@@ -70,18 +70,17 @@ app.post("/api/upload-recording", upload.single("video"), (req, res) => {
 });
 
 
-app.use('/api/cognitive', cognitiveRoutes);
-// Routes
-app.use('/api/voice', voiceRoutes);
-app.use('/api/tests', testRoutes);
-
-app.use('/api/auth', authRoutes); // Changed to use /api/auth as base
-
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
+
+// Routes
+app.use('/api/cognitive', cognitiveRoutes);
+app.use('/api/voice', voiceRoutes);
+app.use('/api/tests', testRoutes);
+app.use('/api/auth', authRoutes); // Changed to use /api/auth as base
 
 export default app;
