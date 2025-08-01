@@ -16,6 +16,32 @@ const Home = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const MEtips = t('generalCognitiveSkills.MentalExe.tips', {
+    returnObjects: true
+  });
+
+  const PHtips = t('generalCognitiveSkills.PhysicalHealth.tips', {
+    returnObjects: true
+  });
+
+  const LTtips = t('generalCognitiveSkills.LearningTechniques.tips', {
+    returnObjects: true
+  });
+
+  const MFtips = t('generalCognitiveSkills.MindfulnessFocus.tips', {
+    returnObjects: true
+  });
+
+  const NStips = t('generalCognitiveSkills.NutritionSupplements.tips', {
+    returnObjects: true
+  });
+
+  const LHtips = t('generalCognitiveSkills.LifestyleHabits.tips', {
+    returnObjects: true
+  });
+
+
+
   return (
     <Box sx={{ bgcolor: '#fcfcff', minHeight: '100vh', pb: 8, width: '100vw',
       position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}
@@ -190,6 +216,348 @@ const Home = () => {
         </Grid>
       </Box>
 
+      {/* Memory Improvement Section */}
+      <Box sx={{ pt: 6, pb: 4, textAlign: 'center', width: '100%' }}>
+        <Typography variant="h3" sx={{ fontWeight: 700, fontFamily: 'Poppins', mb: 1,
+          color: '#222' }}>
+          {t('generalCognitiveSkills.title')}
+        </Typography>
+        <Typography sx={{ color: '#757575', maxWidth: 700, mx: 'auto', mb: 4,
+          fontSize: '1.1rem', fontFamily: 'Poppins' }}>
+          {t('generalCognitiveSkills.description')}
+        </Typography>
+        <Grid container spacing={3} justifyContent="center" alignItems="stretch">
+          
+          {/* Mental Exercises Card */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper elevation={0} sx={{
+              p: 3,
+              borderRadius: 3,
+              border: '1px solid #ede7f6',
+              bgcolor: '#fff',
+              height: '100%',
+              transition: 'box-shadow 0.3s, transform 0.3s',
+              boxShadow: '0 1px 4px rgba(80,80,120,0.04)',
+              '&:hover': {
+                boxShadow: '0 8px 24px rgba(80,80,120,0.10)',
+                transform: 'translateY(-4px)',
+              },
+              display: 'flex', flexDirection: 'column',
+              minWidth: 0,
+              maxWidth: 380,
+              mx: 'auto',
+            }}>
+              <Box sx={{ bgcolor: '#ede7f6', borderRadius: 2, p: 1.2, mb: 2,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                alignSelf: 'center' }}>
+                <PsychologyIcon sx={{ fontSize: 32, color: '#9575cd' }} />
+              </Box>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontFamily: 'Poppins',
+                mb: 2, color: '#9575cd', textAlign: 'left', fontSize: '1.1rem' }}>
+                1. {t('generalCognitiveSkills.MentalExe.title')}
+              </Typography>
+              <Box sx={{ textAlign: 'left' }}>
+                {MEtips.map((tip, index) => (
+                  <Box key={index} sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
+                    <Box sx={{ 
+                      width: 6, 
+                      height: 6, 
+                      borderRadius: '50%', 
+                      bgcolor: '#9575cd', 
+                      mr: 1.5, 
+                      mt: 0.75,
+                      flexShrink: 0 
+                    }} />
+                    <Typography sx={{ color: '#90a4ae', fontFamily: 'Poppins',
+                      fontWeight: 500, fontSize: '0.95rem', lineHeight: 1.6 }}>
+                      {tip}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Paper>
+          </Grid>
+
+          {/* Physical Health Card */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper elevation={0} sx={{
+              p: 3,
+              borderRadius: 3,
+              border: '1px solid #e8f5e9',
+              bgcolor: '#fff',
+              height: '100%',
+              transition: 'box-shadow 0.3s, transform 0.3s',
+              boxShadow: '0 1px 4px rgba(80,80,120,0.04)',
+              '&:hover': {
+                boxShadow: '0 8px 24px rgba(80,80,120,0.10)',
+                transform: 'translateY(-4px)',
+              },
+              display: 'flex', flexDirection: 'column',
+              minWidth: 0,
+              maxWidth: 380,
+              mx: 'auto',
+            }}>
+              <Box sx={{ bgcolor: '#e8f5e9', borderRadius: 2, p: 1.2, mb: 2,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                alignSelf: 'center' }}>
+                <FavoriteBorderIcon sx={{ fontSize: 32, color: '#81c784' }} />
+              </Box>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontFamily: 'Poppins',
+                mb: 2, color: '#9575cd', textAlign: 'left', fontSize: '1.1rem' }}>
+                2. {t('generalCognitiveSkills.PhysicalHealth.title')}
+              </Typography>
+              <Box sx={{ textAlign: 'left' }}>
+                {PHtips.map((tip, index) => (
+                  <Box key={index} sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
+                    <Box sx={{ 
+                      width: 6, 
+                      height: 6, 
+                      borderRadius: '50%', 
+                      bgcolor: '#9575cd', 
+                      mr: 1.5, 
+                      mt: 0.75,
+                      flexShrink: 0 
+                    }} />
+                    <Typography sx={{ color: '#90a4ae', fontFamily: 'Poppins',
+                      fontWeight: 500, fontSize: '0.95rem', lineHeight: 1.6 }}>
+                      {tip}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Paper>
+          </Grid>
+
+          {/* Learning Techniques Card */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper elevation={0} sx={{
+              p: 3,
+              borderRadius: 3,
+              border: '1px solid #e3f2fd',
+              bgcolor: '#fff',
+              height: '100%',
+              transition: 'box-shadow 0.3s, transform 0.3s',
+              boxShadow: '0 1px 4px rgba(80,80,120,0.04)',
+              '&:hover': {
+                boxShadow: '0 8px 24px rgba(80,80,120,0.10)',
+                transform: 'translateY(-4px)',
+              },
+              display: 'flex', flexDirection: 'column',
+              minWidth: 0,
+              maxWidth: 380,
+              mx: 'auto',
+            }}>
+              <Box sx={{ bgcolor: '#e3f2fd', borderRadius: 2, p: 1.2, mb: 2,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                alignSelf: 'center' }}>
+                <InsightsIcon sx={{ fontSize: 32, color: '#90caf9' }} />
+              </Box>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontFamily: 'Poppins',
+                mb: 2, color: '#9575cd', textAlign: 'left', fontSize: '1.1rem' }}>
+                3. {t('generalCognitiveSkills.LearningTechniques.title')}
+              </Typography>
+              <Box sx={{ textAlign: 'left' }}>
+                {LTtips.map((tip, index) => (
+                  <Box key={index} sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
+                    <Box sx={{ 
+                      width: 6, 
+                      height: 6, 
+                      borderRadius: '50%', 
+                      bgcolor: '#9575cd', 
+                      mr: 1.5, 
+                      mt: 0.75,
+                      flexShrink: 0 
+                    }} />
+                    <Typography sx={{ color: '#90a4ae', fontFamily: 'Poppins',
+                      fontWeight: 500, fontSize: '0.95rem', lineHeight: 1.6 }}>
+                      {tip}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Paper>
+          </Grid>
+
+          {/* Mindfulness & Focus Card */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper elevation={0} sx={{
+              p: 3,
+              borderRadius: 3,
+              border: '1px solid #fff3e0',
+              bgcolor: '#fff',
+              height: '100%',
+              transition: 'box-shadow 0.3s, transform 0.3s',
+              boxShadow: '0 1px 4px rgba(80,80,120,0.04)',
+              '&:hover': {
+                boxShadow: '0 8px 24px rgba(80,80,120,0.10)',
+                transform: 'translateY(-4px)',
+              },
+              display: 'flex', flexDirection: 'column',
+              minWidth: 0,
+              maxWidth: 380,
+              mx: 'auto',
+            }}>
+              <Box sx={{ bgcolor: '#fff3e0', borderRadius: 2, p: 1.2, mb: 2,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                alignSelf: 'center' }}>
+                <PsychologyIcon sx={{ fontSize: 32, color: '#ffb74d' }} />
+              </Box>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontFamily: 'Poppins',
+                mb: 2, color: '#9575cd', textAlign: 'left', fontSize: '1.1rem' }}>
+                4. {t('generalCognitiveSkills.MindfulnessFocus.title')}
+              </Typography>
+              <Box sx={{ textAlign: 'left' }}>
+                {MFtips.map((tip, index) => (
+                  <Box key={index} sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
+                    <Box sx={{ 
+                      width: 6, 
+                      height: 6, 
+                      borderRadius: '50%', 
+                      bgcolor: '#9575cd', 
+                      mr: 1.5, 
+                      mt: 0.75,
+                      flexShrink: 0 
+                    }} />
+                    <Typography sx={{ color: '#90a4ae', fontFamily: 'Poppins',
+                      fontWeight: 500, fontSize: '0.95rem', lineHeight: 1.6 }}>
+                      {tip}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Paper>
+          </Grid>
+
+          {/* Nutrition & Supplements Card */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper elevation={0} sx={{
+              p: 3,
+              borderRadius: 3,
+              border: '1px solid #fce4ec',
+              bgcolor: '#fff',
+              height: '100%',
+              transition: 'box-shadow 0.3s, transform 0.3s',
+              boxShadow: '0 1px 4px rgba(80,80,120,0.04)',
+              '&:hover': {
+                boxShadow: '0 8px 24px rgba(80,80,120,0.10)',
+                transform: 'translateY(-4px)',
+              },
+              display: 'flex', flexDirection: 'column',
+              minWidth: 0,
+              maxWidth: 380,
+              mx: 'auto',
+            }}>
+              <Box sx={{ bgcolor: '#fce4ec', borderRadius: 2, p: 1.2, mb: 2,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                alignSelf: 'center' }}>
+                <FavoriteBorderIcon sx={{ fontSize: 32, color: '#f06292' }} />
+              </Box>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontFamily: 'Poppins',
+                mb: 2, color: '#9575cd', textAlign: 'left', fontSize: '1.1rem' }}>
+                5. {t('generalCognitiveSkills.NutritionSupplements.title')}
+              </Typography>
+              <Box sx={{ textAlign: 'left' }}>
+                {NStips.map((tip, index) => (
+                  <Box key={index} sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
+                    <Box sx={{ 
+                      width: 6, 
+                      height: 6, 
+                      borderRadius: '50%', 
+                      bgcolor: '#9575cd', 
+                      mr: 1.5, 
+                      mt: 0.75,
+                      flexShrink: 0 
+                    }} />
+                    <Typography sx={{ color: '#90a4ae', fontFamily: 'Poppins',
+                      fontWeight: 500, fontSize: '0.95rem', lineHeight: 1.6 }}>
+                      {tip}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Paper>
+          </Grid>
+
+          {/* Lifestyle Habits Card */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Paper elevation={0} sx={{
+              p: 3,
+              borderRadius: 3,
+              border: '1px solid #f3e5f5',
+              bgcolor: '#fff',
+              height: '100%',
+              transition: 'box-shadow 0.3s, transform 0.3s',
+              boxShadow: '0 1px 4px rgba(80,80,120,0.04)',
+              '&:hover': {
+                boxShadow: '0 8px 24px rgba(80,80,120,0.10)',
+                transform: 'translateY(-4px)',
+              },
+              display: 'flex', flexDirection: 'column',
+              minWidth: 0,
+              maxWidth: 380,
+              mx: 'auto',
+            }}>
+              <Box sx={{ bgcolor: '#f3e5f5', borderRadius: 2, p: 1.2, mb: 2,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                alignSelf: 'center' }}>
+                <GroupsIcon sx={{ fontSize: 32, color: '#ba68c8' }} />
+              </Box>
+              <Typography variant="h6" sx={{ fontWeight: 700, fontFamily: 'Poppins',
+                mb: 2, color: '#9575cd', textAlign: 'left', fontSize: '1.1rem' }}>
+                6. {t('generalCognitiveSkills.LifestyleHabits.title')}
+              </Typography>
+              <Box sx={{ textAlign: 'left' }}>
+                {LHtips.map((tip, index) => (
+                  <Box key={index} sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
+                    <Box sx={{ 
+                      width: 6, 
+                      height: 6, 
+                      borderRadius: '50%', 
+                      bgcolor: '#9575cd', 
+                      mr: 1.5, 
+                      mt: 0.75,
+                      flexShrink: 0 
+                    }} />
+                    <Typography sx={{ color: '#90a4ae', fontFamily: 'Poppins',
+                      fontWeight: 500, fontSize: '0.95rem', lineHeight: 1.6 }}>
+                      {tip}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Paper>
+          </Grid>
+
+        </Grid>
+
+        {/* Pro Tips Card */}
+        <Box sx={{ mt: 4, maxWidth: 800, mx: 'auto' }}>
+          <Paper elevation={0} sx={{
+            p: 4,
+            borderRadius: 3,
+            background: 'linear-gradient(135deg, #9575cd 0%, #ba68c8 100%)',
+            color: 'white',
+            textAlign: 'center',
+            transition: 'box-shadow 0.3s, transform 0.3s',
+            '&:hover': {
+              boxShadow: '0 12px 32px rgba(149, 117, 205, 0.3)',
+              transform: 'translateY(-2px)',
+            },
+          }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
+              <CheckCircleOutlineIcon sx={{ fontSize: 32, mr: 1 }} />
+              <Typography variant="h5" sx={{ fontWeight: 700, fontFamily: 'Poppins' }}>
+                7. {t('generalCognitiveSkills.proTitle')}
+              </Typography>
+            </Box>
+            <Typography sx={{ fontFamily: 'Poppins', fontSize: '1.1rem', lineHeight: 1.7,
+              opacity: 0.95 }}>
+                {t('generalCognitiveSkills.proTips')}
+            </Typography>
+          </Paper>
+        </Box>
+      </Box>
+
       {/* Perks Section */}
       <Box sx={{ pt: 6, pb: 4, textAlign: 'center', width: '100%' }}>
         <Typography variant="h3" sx={{ fontWeight: 700, fontFamily: 'Poppins',
@@ -249,7 +617,7 @@ const Home = () => {
             }}>
               <Box sx={{ bgcolor: '#ede7f6', borderRadius: 2, p: 1.2, mb: 1.5,
                 display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <CheckCircleOutlineIcon sx={{ fontSize: 32, color: '#90caf9' }} />
+                <CheckCircleOutlineIcon sx={{ fontSize: 32, color: '#9575cd' }} />
               </Box>
               <Typography variant="h6" sx={{ fontWeight: 700, fontFamily: 'Poppins',
                 mb: 0.5, color: '#222', textAlign: 'center', fontSize: '1.15rem' }}>
