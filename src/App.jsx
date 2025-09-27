@@ -20,12 +20,7 @@ const FocusExercises = React.lazy(() => import("./components/FocusExercises"));
 const WordActivities = React.lazy(() => import("./components/WordActivities"));
 const VisualPuzzles = React.lazy(() => import("./components/VisualPuzzles"));
 
-useEffect(() => {
-    fetch("/api/hello") 
-      .then(res => res.json())
-      .then(data => setMessage(data.message))
-      .catch(err => console.error("Error:", err));
-  }, []);
+
 
 const theme = createTheme({
   typography: {
