@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
+import serverlessExpress from "@vendia/serverless-express";
 import mongoose from 'mongoose';
 import cors from 'cors';
 import multer from 'multer';
@@ -80,4 +81,4 @@ app.use('/api/voice', voiceRoutes);
 app.use('/api/tests', testRoutes);
 app.use('/api/auth', authRoutes); // Changed to use /api/auth as base
 
-export default app;
+export const handler = serverlessExpress({ app });
