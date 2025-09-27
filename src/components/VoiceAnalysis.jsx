@@ -66,7 +66,12 @@ const processVoice = () => {
       setRecording(false);
     }
   };
-
+useEffect(() => {
+    fetch("/api/hello") // your backend endpoint
+      .then(res => res.json())
+      .then(data => setMessage(data.message))
+      .catch(err => console.error("Error:", err));
+  }, []);
   return (
     <Box sx={{ bgcolor: '#fcfcff', minHeight: '100vh', py: 6, px: 0, width: '100vw', position: 'relative', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw' }}>
       <Typography variant="h2" sx={{ fontWeight: 700, fontFamily: 'Poppins', color: '#222', textAlign: 'center', mb: 1 }}>

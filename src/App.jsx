@@ -11,7 +11,6 @@ import Signup from './components/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css'
 
-// Lazy loaded pages
 const Home = React.lazy(() => import('./pages/Home'));
 const CognitiveAssessments = React.lazy(() => import('./pages/CognitiveAssessments'));
 const VoiceAnalysis = React.lazy(() => import('./components/VoiceAnalysis'));
@@ -21,7 +20,13 @@ const FocusExercises = React.lazy(() => import("./components/FocusExercises"));
 const WordActivities = React.lazy(() => import("./components/WordActivities"));
 const VisualPuzzles = React.lazy(() => import("./components/VisualPuzzles"));
 
-// Create theme with Poppins font
+useEffect(() => {
+    fetch("/api/hello") 
+      .then(res => res.json())
+      .then(data => setMessage(data.message))
+      .catch(err => console.error("Error:", err));
+  }, []);
+
 const theme = createTheme({
   typography: {
     fontFamily: 'Poppins, Arial, sans-serif',

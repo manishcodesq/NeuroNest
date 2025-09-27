@@ -117,6 +117,13 @@ const Signup = () => {
         }),
       });
 
+      useEffect(() => {
+    fetch("/api/hello") // your backend endpoint
+      .then(res => res.json())
+      .then(data => setMessage(data.message))
+      .catch(err => console.error("Error:", err));
+  }, []);
+  
       const data = await response.json();
 
       if (response.ok) {

@@ -125,6 +125,13 @@ const CognitiveAssessments = () => {
     }, 1000);
   };
 
+  useEffect(() => {
+    fetch("/api/hello") // your backend endpoint
+      .then(res => res.json())
+      .then(data => setMessage(data.message))
+      .catch(err => console.error("Error:", err));
+  }, []);
+  
   const renderAssessmentComponent = () => {
     switch (activeAssessment) {
       case 'focusTimer':

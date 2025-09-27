@@ -26,6 +26,12 @@ import { useTranslation } from 'react-i18next';
 const YourComponent = () => {
   const { t } = useTranslation();
 }
+useEffect(() => {
+    fetch("/api/hello") // your backend endpoint
+      .then(res => res.json())
+      .then(data => setMessage(data.message))
+      .catch(err => console.error("Error:", err));
+  }, []);
 // Register Chart.js components
 ChartJS.register(
   CategoryScale,
